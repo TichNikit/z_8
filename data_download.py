@@ -1,6 +1,7 @@
 import yfinance as yf
 import pandas as pd
 
+
 def fetch_stock_data(ticker, start_date=None, end_date=None):
     stock = yf.Ticker(ticker)
 
@@ -14,11 +15,13 @@ def fetch_stock_data(ticker, start_date=None, end_date=None):
         print(f"Ошибка при загрузке данных для {ticker}: {e}")
         return pd.DataFrame()
 
+
 def add_moving_average(data, window_size=5):
     if 'Close' in data:
         data['Moving_Average'] = data['Close'].rolling(window=window_size).mean()
         data['STD_Dev'] = data['Close'].rolling(window=window_size).std()
     return data
+
 
 def calculate_and_display_statistics(data):
     if not data.empty:
@@ -28,6 +31,7 @@ def calculate_and_display_statistics(data):
         print(f"Стандартное отклонение цены закрытия: {std_deviation:.2f} USD")
     else:
         print("Нет данных для расчета статистики.")
+
 
 def notify_if_strong_fluctuations(data, threshold):
     if 'Close' in data:
@@ -43,12 +47,14 @@ def notify_if_strong_fluctuations(data, threshold):
     else:
         print("Данные о закрытии отсутствуют.")
 
+
 def export_data_to_csv(data, file_name):
     try:
         data.to_csv(file_name, index=True)
         print(f"Данные экспортированы в файл: {file_name}")
     except Exception as e:
         print(f"Ошибка при экспорте данных: {e}")
+
 
 def calculate_rsi(data, window=14):
     if 'Close' in data:
@@ -58,6 +64,7 @@ def calculate_rsi(data, window=14):
         rs = gain / loss.replace({0: pd.NA})
         data['RSI'] = 100 - (100 / (1 + rs))
     return data
+
 
 def calculate_macd(data):
     if 'Close' in data:
