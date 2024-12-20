@@ -4,6 +4,17 @@ import plotly.graph_objects as go
 
 
 def create_and_save_plot(data, ticker, period, filename=None, style='default'):
+    """
+    Создает и сохраняет график цен акций с возможностью отображения скользящей средней и стандартного отклонения.
+
+    Параметры:
+    data (pd.DataFrame): DataFrame с данными акций.
+    ticker (str): Тикер акции.
+    period (str): Период данных.
+    filename (str): Имя выходного файла для сохранения (по умолчанию None).
+    style (str): Стиль графика matplotlib (по умолчанию 'default').
+    """
+
     plt.style.use(style)
     plt.figure(figsize=(10, 6))
 
@@ -47,6 +58,14 @@ def create_and_save_plot(data, ticker, period, filename=None, style='default'):
 
 
 def plot_rsi(data, ticker):
+    """
+    Строит график индекса относительной силы (RSI) и сохраняет его как PNG.
+
+    Параметры:
+    data (pd.DataFrame): DataFrame с данными акций, содержащими столбец 'RSI'.
+    ticker (str): Тикер акции.
+    """
+
     plt.figure(figsize=(10, 6))
     plt.plot(data['Date'], data['RSI'], label='RSI', color='orange')
     plt.axhline(70, linestyle='--', alpha=0.5, color='red', label='Overbought (70)')
@@ -61,6 +80,14 @@ def plot_rsi(data, ticker):
 
 
 def plot_macd(data, ticker):
+    """
+    Строит график MACD и сигнальной линии и сохраняет его как PNG.
+
+    Параметры:
+    data (pd.DataFrame): DataFrame с данными акций, содержащими столбцы 'MACD' и 'MACD_Signal'.
+    ticker (str): Тикер акции.
+    """
+
     plt.figure(figsize=(10, 6))
     plt.plot(data['Date'], data['MACD'], label='MACD')
     plt.plot(data['Date'], data['MACD_Signal'], label='MACD Signal', linestyle='--')
@@ -74,6 +101,13 @@ def plot_macd(data, ticker):
 
 
 def plot_interactive_graph(data):
+    """
+    Строит интерактивный график цен акций с использованием Plotly.
+
+    Параметры:
+    data (pd.DataFrame): DataFrame с данными акций.
+    """
+
     if data.empty or 'Close' not in data:
         print("Ошибка: Нет данных для построения графика или отсутствует столбец 'Close'.")
         return
